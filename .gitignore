@@ -1,0 +1,8 @@
+vm
+*.o
+*.tar
+address.txt
+addresses.txt
+BACKING_STORE.bin
+correct.txt
+output.txt
