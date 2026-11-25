@@ -131,6 +131,21 @@ int find_free_frame(const VirtualMemory *vm) {
     return -1;
 }
 
+
+int read_page(FILE *backing_store, int page, int8_t *buffer) {
+    long position = (long) page * PAGE_SIZE;
+
+    if (fseek(backing_store, position, SEEK_SET) != 0) {
+        return 0;
+    }
+
+    if (fread(buffer, 1, PAGE_SIZE, backing_store) != PAGE_SIZE) {
+        return 0;
+    }
+
+    return 1;
+}
+
 int main(int argc, char *argv[]) {
     VirtualMemory vm = {0};
 
@@ -163,6 +178,14 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
+    FILE *backing_store = fopen("BACKING_STORE.bin", "rb");
+
+    if (backing_store == NULL) {
+        fprintf(stderr, "Error: cannot open backing store.\n");
+        fclose(addresses);
+        return EXIT_FAILURE;
+    }
+
     initialize_memory(&vm);
 
     int address;
@@ -171,10 +194,20 @@ int main(int argc, char *argv[]) {
         int page = get_page(address);
         int offset = get_offset(address);
 
-        printf("Address: %d Page: %d Offset: %d\n",
-               address, page, offset);
+        int8_t buffer[PAGE_SIZE];
+
+        if (!read_page(backing_store, page, buffer)) {
+            fprintf(stderr, "Error: cannot read page from backing store.\n");
+            fclose(backing_store);
+            fclose(addresses);
+            return EXIT_FAILURE;
+        }
+
+        printf("Address: %d Page: %d Offset: %d Value: %d\n",
+               address, page, offset, buffer[offset]);
     }
 
+    fclose(backing_store);
     fclose(addresses);
     return EXIT_SUCCESS;
 }
