@@ -147,16 +147,37 @@ int read_page(FILE *backing_store, int page, int8_t *buffer) {
 }
 
 
+
+int select_fifo_frame(const VirtualMemory *vm) {
+    int victim = 0;
+
+    for (int i = 1; i < NUM_FRAMES; i++) {
+        if (vm->frames[i].loaded_at <
+            vm->frames[victim].loaded_at) {
+            victim = i;
+        }
+    }
+
+    return victim;
+}
+
 int load_page(VirtualMemory *vm, FILE *backing_store, int page) {
     int frame = find_free_frame(vm);
 
     if (frame == -1) {
-        return -1;
+        frame = select_fifo_frame(vm);
     }
 
     if (!read_page(backing_store, page,
                    vm->physical_memory[frame])) {
         return -1;
+    }
+
+    int old_page = vm->frames[frame].page;
+
+    if (old_page != -1) {
+        vm->page_table[old_page].valid = 0;
+        vm->page_table[old_page].frame = -1;
     }
 
     vm->frames[frame].page = page;
