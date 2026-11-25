@@ -255,11 +255,29 @@ int select_fifo_tlb(const VirtualMemory *vm) {
     return victim;
 }
 
+
+int select_lru_tlb(const VirtualMemory *vm) {
+    int victim = 0;
+
+    for (int i = 1; i < TLB_SIZE; i++) {
+        if (vm->tlb[i].last_used <
+            vm->tlb[victim].last_used) {
+            victim = i;
+        }
+    }
+
+    return victim;
+}
+
 int insert_tlb(VirtualMemory *vm, int page, int frame) {
     int index = find_free_tlb_entry(vm);
 
     if (index == -1) {
-        index = select_fifo_tlb(vm);
+        if (vm->tlb_algorithm == FIFO) {
+            index = select_fifo_tlb(vm);
+        } else {
+            index = select_lru_tlb(vm);
+        }
     }
 
     vm->tlb[index].page = page;
