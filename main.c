@@ -45,6 +45,38 @@ typedef struct {
     Algorithm tlb_algorithm;
 } VirtualMemory;
 
-int main(void) {
+int parse_algorithm(const char *name, Algorithm *algorithm) {
+    if (strcmp(name, "fifo") == 0) {
+        *algorithm = FIFO;
+        return 1;
+    }
+
+    if (strcmp(name, "lru") == 0) {
+        *algorithm = LRU;
+        return 1;
+    }
+
     return 0;
+}
+
+int main(int argc, char *argv[]) {
+    VirtualMemory vm = {0};
+
+    if (argc != 4) {
+        fprintf(stderr, "Usage: %s <address_file> <fifo|lru> <fifo|lru>\n",
+                argv[0]);
+        return EXIT_FAILURE;
+    }
+
+    if (!parse_algorithm(argv[2], &vm.page_algorithm)) {
+        fprintf(stderr, "Error: invalid page replacement algorithm.\n");
+        return EXIT_FAILURE;
+    }
+
+    if (!parse_algorithm(argv[3], &vm.tlb_algorithm)) {
+        fprintf(stderr, "Error: invalid TLB replacement algorithm.\n");
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
 }
