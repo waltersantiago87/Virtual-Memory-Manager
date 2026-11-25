@@ -1,0 +1,461 @@
+Script started on 2026-11-24 20:20:31-03:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="120" LINES="30"]
+[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7mcat > Makefile <<'EOF'[27m
+[7mCC = gcc[27m
+[7mCFLAGS = -Wall -Wextra -std=c11 -O2 -pthread[27m
+[7mTARGET = vm[27m
+
+[7mall: $(TARGET)[27m
+
+[7m$(TARGET): main.c[27m
+[7m        $(CC) $(CFLAGS) main.c -o $(TARGET)[27m
+
+[7mclean:[27m
+[7m        rm -f $(TARGET) *.o[27m
+
+[7m.PHONY: all clean[27m
+[7mEOF[27m[A[A[A[A[A[A[A[A[A[A[A[A[A[A]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ cat > Makefile <<'EOF'
+CC = gcc
+CFLAGS = -Wall -Wextra -std=c11 -O2 -pthread
+TARGET = vm
+
+all: $(TARGET)
+
+$(TARGET): main.c
+        $(CC) $(CFLAGS) main.c -o $(TARGET)
+
+clean:
+        rm -f $(TARGET) *.o
+
+.PHONY: all clean
+EOF
+[?2004l[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7mcat > main.c <<'EOF'[27m
+[7m#include <stdio.h>[27m
+
+[7mint main(void) {[27m
+[7m    return 0;[27m
+[7m}[27m
+[7mEOF[27m[A[A[A[A[A[A]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ cat > main.c <<'EOF'
+#include <stdio.h>
+
+int main(void) {
+    return 0;
+}
+EOF
+[?2004l[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7mmake[27m
+[7mls -l vm[27m
+[7m./vm[27m
+[7mmake clean[27m
+[7mmake[27m[A[A[A[A]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ make
+ls -l vm
+./vm
+make clean
+make
+[?2004lgcc -Wall -Wextra -std=c11 -O2 -pthread main.c -o vm
+-rwxr-xr-x 1 walter walter 15776 Nov 24 20:21 [0m[01;32mvm[0m
+rm -f vm *.o
+gcc -Wall -Wextra -std=c11 -O2 -pthread main.c -o vm
+[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7mgit add Makefile main.c[27m
+[7mgit commit -m "Adicionando Makefile para compilacao"[27m
+[7mgit push[27m[A[A]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ git add Makefile main.c
+git commit -m "Adicionando Makefile para compilacao"
+git push
+[?2004l[main 82084e8] Adicionando Makefile para compilacao
+ 2 files changed, 18 insertions(+)
+ create mode 100644 Makefile
+ create mode 100644 main.c
+Enumerating objects: 5, done.
+Counting objects:  20% (1/5)Counting objects:  40% (2/5)Counting objects:  60% (3/5)Counting objects:  80% (4/5)Counting objects: 100% (5/5)Counting objects: 100% (5/5), done.
+Delta compression using up to 12 threads
+Compressing objects:  25% (1/4)Compressing objects:  50% (2/4)Compressing objects:  75% (3/4)Compressing objects: 100% (4/4)Compressing objects: 100% (4/4), done.
+Writing objects:  25% (1/4)Writing objects:  50% (2/4)Writing objects:  75% (3/4)Writing objects: 100% (4/4)Writing objects: 100% (4/4), 532 bytes | 532.00 KiB/s, done.
+Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/waltersantiago87/Virtual-Memory-Manager.git
+   51a70c0..82084e8  main -> main
+[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7mmake[27m
+[7mgit status[27m
+[7mgit log --oneline -2[27m[A[A]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ make
+git status
+git log --oneline -2
+[?2004lmake: Nothing to be done for 'all'.
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	[31mevidencias.log[m
+
+nothing added to commit but untracked files present (use "git add" to track)
+[?1h=[33m82084e8[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Adicionando Makefile para compilacao[m
+[33m51a70c0[m Configurando estrutura inicial do projeto[m
+[K[?1l>[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ cat > main.c <<'EOF'
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <string.h>
+#include <pthread.h>
+
+#define PAGE_SIZE 256
+#define NUM_PAGES 256
+#define NUM_FRAMES 128
+#define TLB_SIZE 16
+#define MAX_ADDRESS 65535
+
+typedef enum {
+    FIFO,
+    LRU
+} Algorithm;
+
+typedef struct {
+    int frame;
+    int valid;
+} PageEntry;
+
+[7mtypedef struct {[27m
+[7m    int page;[27m
+[7m    uint64_t loaded_at;[27m
+[7m    uint64_t last_used;[27m
+[7m} FrameEntry;[27m
+
+[7mtypedef struct {[27m
+[7m    int page;[27m[7m    int frame;[27m[7m    int valid;[27m[7m    uint64_t loaded_at;[27m[7m    uint64_t last_used;[27m[7m} TLBEntry;[27m[7mtypedef struct {[27m[7m    int8_t physical_memory[NUM_FRAMES][PAGE_SIZE];[27m[7m    PageEntry page_table[NUM_PAGES];[27m[7m    FrameEntry frames[NUM_FRAMES];[27m[7m    TLBEntry tlb[TLB_SIZE];[27m[7m    uint64_t clock;[27m[7m    Algorithm page_algorithm;[27m[7m    Algorithm tlb_algorithm;[27m[7m} VirtualMemory;[27m[7mint main(void) {[27m[7m    return 0;[27m[7m}[27m[7mEOF[27m[A[A[A[A[A[A[Atypedef struct {
+    int page;
+    uint64_t loaded_at;
+    uint64_t last_used;
+} FrameEntry;
+
+typedef struct {
+    int page;    int frame;    int valid;    uint64_t loaded_at;    uint64_t last_used;} TLBEntry;typedef struct {    int8_t physical_memory[NUM_FRAMES][PAGE_SIZE];    PageEntry page_table[NUM_PAGES];    FrameEntry frames[NUM_FRAMES];    TLBEntry tlb[TLB_SIZE];    uint64_t clock;    Algorithm page_algorithm;    Algorithm tlb_algorithm;} VirtualMemory;int main(void) {    return 0;}EOF
+[?2004l[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7mmake[27m
+[7m./vm[27m[A]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ make
+./vm
+[?2004lgcc -Wall -Wextra -std=c11 -O2 -pthread main.c -o vm
+[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7mgit add main.c[27m
+[7mgit commit -m "Definindo constantes e estruturas da memoria virtual"[27m
+[7mgit push[27m[A[A]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ git add main.c
+git commit -m "Definindo constantes e estruturas da memoria virtual"
+git push
+[?2004l[main 6fd783c] Definindo constantes e estruturas da memoria virtual
+ 1 file changed, 45 insertions(+)
+Enumerating objects: 5, done.
+Counting objects:  20% (1/5)Counting objects:  40% (2/5)Counting objects:  60% (3/5)Counting objects:  80% (4/5)Counting objects: 100% (5/5)Counting objects: 100% (5/5), done.
+Delta compression using up to 12 threads
+Compressing objects:  33% (1/3)Compressing objects:  66% (2/3)Compressing objects: 100% (3/3)Compressing objects: 100% (3/3), done.
+Writing objects:  33% (1/3)Writing objects:  66% (2/3)Writing objects: 100% (3/3)Writing objects: 100% (3/3), 630 bytes | 630.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas:   0% (0/1)[Kremote: Resolving deltas: 100% (1/1)[Kremote: Resolving deltas: 100% (1/1), completed with 1 local object.[K
+To https://github.com/waltersantiago87/Virtual-Memory-Manager.git
+   82084e8..6fd783c  main -> main
+[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7mgit status[27m
+[7mgit log --oneline -3[27m[A]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ git status
+git log --oneline -3
+[?2004lOn branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	[31mevidencias.log[m
+
+nothing added to commit but untracked files present (use "git add" to track)
+[?1h=[33m6fd783c[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Definindo constantes e estruturas da memoria virtual[m
+[33m82084e8[m Adicionando Makefile para compilacao[m
+[33m51a70c0[m Configurando estrutura inicial do projeto[m
+[K[?1l>[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7m./vm address.txt lru fifo[27m[25@./vm address.txt lru fifo[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P./vm address.txt lru fif[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K
+[?2004l[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ sed -i '/^int main(void)/,$d' main.c
+
+cat >> main.c <<'EOF'
+int parse_algorithm(const char *name, Algorithm *algorithm) {
+    if (strcmp(name, "fifo") == 0) {
+        *algorithm = FIFO;
+        return 1;
+    }
+
+[7m    if (strcmp(name, "lru") == 0) {[27m
+[7m        *algorithm = LRU;[27m
+[7m        return 1;[27m
+[7m    }[27m
+
+[7m    return 0;[27m
+[7m}[27m
+
+[7mint main(int argc, char *argv[]) {[27m
+[7m    VirtualMemory vm = {0};[27m
+
+[7m    if (argc != 4) {[27m
+[7m        fprintf(stderr, "Usage: %s <address_file> <fifo|lru> <fifo|lru>\n",[27m
+[7m                argv[0]);[27m
+[7m        return EXIT_FAILURE;[27m
+[7m    }[27m
+
+[7m    if (!parse_algorithm(argv[2], &vm.page_algorithm)) {[27m
+[7m        fprintf(stderr, "Error: invalid page replacement algorithm.\n");[27m
+[7m        return EXIT_FAILURE;[27m
+[7m    }[27m[7m    if (!parse_algorithm(argv[3], &vm.tlb_algorithm)) {[27m[7m        fprintf(stderr, "Error: invalid TLB replacement algorithm.\n");[27m[7m        return EXIT_FAILURE;[27m[7m    }[27m[7m    return EXIT_SUCCESS;[27m[7m}[27m[7mEOF[27m[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A    if (strcmp(name, "lru") == 0) {
+        *algorithm = LRU;
+        return 1;
+    }
+
+    return 0;
+}
+
+int main(int argc, char *argv[]) {
+    VirtualMemory vm = {0};
+
+    if (argc != 4) {
+        fprintf(stderr, "Usage: %s <address_file> <fifo|lru> <fifo|lru>\n",
+                argv[0]);
+        return EXIT_FAILURE;
+    }
+
+    if (!parse_algorithm(argv[2], &vm.page_algorithm)) {
+        fprintf(stderr, "Error: invalid page replacement algorithm.\n");
+        return EXIT_FAILURE;
+    }    if (!parse_algorithm(argv[3], &vm.tlb_algorithm)) {        fprintf(stderr, "Error: invalid TLB replacement algorithm.\n");        return EXIT_FAILURE;    }    return EXIT_SUCCESS;}EOF
+[?2004l[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7mmake[27m
+[7m./vm[27m
+[7m./vm address.txt[27m
+[7m./vm address.txt abc fifo[27m
+[7m./vm address.txt fifo abc[27m
+[7m./vm address.txt lru fifo[27m
+[7mecho $?[27m[A[A[A[A[A[A]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ make
+./vm
+./vm address.txt
+./vm address.txt abc fifo
+./vm address.txt fifo abc
+./vm address.txt lru fifo
+echo $?
+[?2004lgcc -Wall -Wextra -std=c11 -O2 -pthread main.c -o vm
+Usage: ./vm <address_file> <fifo|lru> <fifo|lru>
+Usage: ./vm <address_file> <fifo|lru> <fifo|lru>
+Error: invalid page replacement algorithm.
+Error: invalid TLB replacement algorithm.
+0
+[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7mgit add main.c[27m
+[7mgit commit -m "Validando argumentos da linha de comando"[27m
+[7mgit push[27m[A[A]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ git add main.c
+git commit -m "Validando argumentos da linha de comando"
+git push
+[?2004l[main bfb82fe] Validando argumentos da linha de comando
+ 1 file changed, 33 insertions(+), 1 deletion(-)
+Enumerating objects: 5, done.
+Counting objects:  20% (1/5)Counting objects:  40% (2/5)Counting objects:  60% (3/5)Counting objects:  80% (4/5)Counting objects: 100% (5/5)Counting objects: 100% (5/5), done.
+Delta compression using up to 12 threads
+Compressing objects:  33% (1/3)Compressing objects:  66% (2/3)Compressing objects: 100% (3/3)Compressing objects: 100% (3/3), done.
+Writing objects:  33% (1/3)Writing objects:  66% (2/3)Writing objects: 100% (3/3)Writing objects: 100% (3/3), 859 bytes | 859.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas:   0% (0/1)[Kremote: Resolving deltas: 100% (1/1)[Kremote: Resolving deltas: 100% (1/1), completed with 1 local object.[K
+To https://github.com/waltersantiago87/Virtual-Memory-Manager.git
+   6fd783c..bfb82fe  main -> main
+[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7mgit status[27m
+[7mgit log --oneline -4[27m[A]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ git status
+git log --oneline -4
+[?2004lOn branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	[31mevidencias.log[m
+
+nothing added to commit but untracked files present (use "git add" to track)
+[?1h=[33mbfb82fe[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Validando argumentos da linha de comando[m
+[33m6fd783c[m Definindo constantes e estruturas da memoria virtual[m
+[33m82084e8[m Adicionando Makefile para compilacao[m
+[33m51a70c0[m Configurando estrutura inicial do projeto[m
+[K[?1l>[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ python3 - <<'PY'
+from pathlib import Path
+
+p = Path("main.c")
+code = p.read_text()
+
+code = code.replace(
+    "#include <stdio.h>",
+    "#include <stdio.h>\n#include <errno.h>\n#include <ctype.h>"
+)
+
+function = r'''
+int validate_addresses(FILE *file) {
+    char token[64];
+    char *end;
+    long address;
+    int count = 0;
+
+    while (fscanf(file, "%63s", token) == 1) {
+        for (size_t i = 0; token[i] != '\0'; i++) {
+            if (!isdigit((unsigned char) token[i])) {
+                return 0;
+            }
+        }
+
+        errno = 0;
+        address = strtol(token, &end, 10);
+
+        if (errno != 0 || *end != '\0' ||
+            address < 0 || address > MAX_ADDRESS) {
+            return 0;        }        count++;    }    if (ferror(file) || count == 0) {        return 0;    }    rewind(file);    return 1;[7m}[27m[7m'''[27m[7mcode = code.replace([27m[7m    "int main(int argc, char *argv[])",[27m[7m    function + "int main(int argc, char *argv[])"[27m[7m)[27m[7mcode = code.replace([27m[7m    "    return EXIT_SUCCESS;",[27m[7m    r'''    FILE *addresses = fopen(argv[1], "r");[27m[7m    if (addresses == NULL) {[27m[7m        fprintf(stderr, "Error: cannot open address file.\n");[27m[7m        return EXIT_FAILURE;[27m[7m    }[27m[7m    if (!validate_addresses(addresses)) {[27m[7m        fprintf(stderr, "Error: invalid address file format.\n");[27m[7m        fclose(addresses);[27m[7m        return EXIT_FAILURE;[27m[7m    }[27m[7m    fclose(addresses);[27m[7m    return EXIT_SUCCESS;'''[27m[7m)[27m[7mp.write_text(code)[27m[7mPY[27m}'''code = code.replace(    "int main(int argc, char *argv[])",    function + "int main(int argc, char *argv[])")code = code.replace(    "    return EXIT_SUCCESS;",    r'''    FILE *addresses = fopen(argv[1], "r");    if (addresses == NULL) {        fprintf(stderr, "Error: cannot open address file.\n");        return EXIT_FAILURE;    }    if (!validate_addresses(addresses)) {        fprintf(stderr, "Error: invalid address file format.\n");        fclose(addresses);        return EXIT_FAILURE;    }    fclose(addresses);    return EXIT_SUCCESS;''')p.write_text(code)PY
+[?2004l[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7mmake[27m
+
+[7mprintf '16916\n62493\n30198\n' > /tmp/vm-valid.txt[27m
+[7mprintf '16916\nabc\n30198\n' > /tmp/vm-invalid.txt[27m
+[7mprintf '65536\n' > /tmp/vm-range.txt[27m
+[7mprintf '%s\n' '-10' > /tmp/vm-negative.txt[27m
+[7mtouch /tmp/vm-empty.txt[27m[A[A[A[A[A[A]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ make
+
+printf '16916\n62493\n30198\n' > /tmp/vm-valid.txt
+printf '16916\nabc\n30198\n' > /tmp/vm-invalid.txt
+printf '65536\n' > /tmp/vm-range.txt
+printf '%s\n' '-10' > /tmp/vm-negative.txt
+touch /tmp/vm-empty.txt
+[?2004lgcc -Wall -Wextra -std=c11 -O2 -pthread main.c -o vm
+[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7m./vm /tmp/vm-valid.txt lru fifo[27m
+[7mecho $?[27m
+
+[7m./vm /tmp/vm-invalid.txt lru fifo[27m
+[7m./vm /tmp/vm-range.txt lru fifo[27m
+[7m./vm /tmp/vm-negative.txt lru fifo[27m
+[7m./vm /tmp/vm-empty.txt lru fifo[27m
+[7m./vm inexistente.txt lru fifo[27m[A[A[A[A[A[A[A]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ ./vm /tmp/vm-valid.txt lru fifo
+echo $?
+
+./vm /tmp/vm-invalid.txt lru fifo
+./vm /tmp/vm-range.txt lru fifo
+./vm /tmp/vm-negative.txt lru fifo
+./vm /tmp/vm-empty.txt lru fifo
+./vm inexistente.txt lru fifo
+[?2004l0
+Error: invalid address file format.
+Error: invalid address file format.
+Error: invalid address file format.
+Error: invalid address file format.
+Error: cannot open address file.
+[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7mgit add main.c[27m
+[7mgit commit -m "Implementando leitura e validacao dos enderecos"[27m
+[7mgit push[27m[A[A]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ git add main.c
+git commit -m "Implementando leitura e validacao dos enderecos"
+git push
+[?2004l[main 50a27d0] Implementando leitura e validacao dos enderecos
+ 1 file changed, 49 insertions(+)
+Enumerating objects: 5, done.
+Counting objects:  20% (1/5)Counting objects:  40% (2/5)Counting objects:  60% (3/5)Counting objects:  80% (4/5)Counting objects: 100% (5/5)Counting objects: 100% (5/5), done.
+Delta compression using up to 12 threads
+Compressing objects:  33% (1/3)Compressing objects:  66% (2/3)Compressing objects: 100% (3/3)Compressing objects: 100% (3/3), done.
+Writing objects:  33% (1/3)Writing objects:  66% (2/3)Writing objects: 100% (3/3)Writing objects: 100% (3/3), 774 bytes | 774.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas:   0% (0/2)[Kremote: Resolving deltas:  50% (1/2)[Kremote: Resolving deltas: 100% (2/2)[Kremote: Resolving deltas: 100% (2/2), completed with 2 local objects.[K
+To https://github.com/waltersantiago87/Virtual-Memory-Manager.git
+   bfb82fe..50a27d0  main -> main
+[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7mgit status[27m
+[7mgit log --oneline -5[27m[A]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ git status
+git log --oneline -5
+[?2004lOn branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	[31mevidencias.log[m
+
+nothing added to commit but untracked files present (use "git add" to track)
+[?1h=[33m50a27d0[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Implementando leitura e validacao dos enderecos[m
+[33mbfb82fe[m Validando argumentos da linha de comando[m
+[33m6fd783c[m Definindo constantes e estruturas da memoria virtual[m
+[33m82084e8[m Adicionando Makefile para compilacao[m
+[33m51a70c0[m Configurando estrutura inicial do projeto[m
+[K[?1l>[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ python3 - <<'PY'
+from pathlib import Path
+
+p = Path("main.c")
+code = p.read_text()
+
+function = '''
+int get_page(int address) {
+    return (address >> 8) & 0xFF;
+}
+
+[7mint get_offset(int address) {[27m
+[7m    return address & 0xFF;[27m
+[7m}[27m
+
+[7m'''[27m
+
+[7mcode = code.replace([27m
+[7m    "int main(int argc, char *argv[])",[27m
+[7m    function + "int main(int argc, char *argv[])"[27m
+[7m)[27m
+
+[7mcode = code.replace([27m
+[7m    "    fclose(addresses);\n    return EXIT_SUCCESS;",[27m
+[7m    r'''    int address;[27m
+
+[7m    while (fscanf(addresses, "%d", &address) == 1) {[27m
+[7m        int page = get_page(address);[27m
+[7m        int offset = get_offset(address);[27m
+
+[7m        printf("Address: %d Page: %d Offset: %d\n",[27m[7m               address, page, offset);[27m[7m    }[27m[7m    fclose(addresses);[27m[7m    return EXIT_SUCCESS;'''[27m[7m)[27m[7mp.write_text(code)[27m[7mPY[27m[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[Aint get_offset(int address) {
+    return address & 0xFF;
+}
+
+'''
+
+code = code.replace(
+    "int main(int argc, char *argv[])",
+    function + "int main(int argc, char *argv[])"
+)
+
+code = code.replace(
+    "    fclose(addresses);\n    return EXIT_SUCCESS;",
+    r'''    int address;
+
+    while (fscanf(addresses, "%d", &address) == 1) {
+        int page = get_page(address);
+        int offset = get_offset(address);
+
+        printf("Address: %d Page: %d Offset: %d\n",               address, page, offset);    }    fclose(addresses);    return EXIT_SUCCESS;''')p.write_text(code)PY
+[?2004l[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7mmake[27m
+[7m./vm /tmp/vm-valid.txt lru fifo[27m[A]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ make
+./vm /tmp/vm-valid.txt lru fifo
+[?2004lgcc -Wall -Wextra -std=c11 -O2 -pthread main.c -o vm
+Address: 16916 Page: 66 Offset: 20
+Address: 62493 Page: 244 Offset: 29
+Address: 30198 Page: 117 Offset: 246
+[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7mprintf '0\n255\n256\n65535\n' > /tmp/vm-limits.txt[27m
+[7m./vm /tmp/vm-limits.txt fifo fifo[27m[A]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ printf '0\n255\n256\n65535\n' > /tmp/vm-limits.txt
+./vm /tmp/vm-limits.txt fifo fifo
+[?2004lAddress: 0 Page: 0 Offset: 0
+Address: 255 Page: 0 Offset: 255
+Address: 256 Page: 1 Offset: 0
+Address: 65535 Page: 255 Offset: 255
+[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7mgit add main.c[27m
+[7mgit commit -m "Implementando separacao de pagina e offset"[27m
+[7mgit push[27m[A[A]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ git add main.c
+git commit -m "Implementando separacao de pagina e offset"
+git push
+[?2004l[main 067d1b6] Implementando separacao de pagina e offset
+ 1 file changed, 19 insertions(+)
+Enumerating objects: 5, done.
+Counting objects:  20% (1/5)Counting objects:  40% (2/5)Counting objects:  60% (3/5)Counting objects:  80% (4/5)Counting objects: 100% (5/5)Counting objects: 100% (5/5), done.
+Delta compression using up to 12 threads
+Compressing objects:  33% (1/3)Compressing objects:  66% (2/3)Compressing objects: 100% (3/3)Compressing objects: 100% (3/3), done.
+Writing objects:  33% (1/3)Writing objects:  66% (2/3)Writing objects: 100% (3/3)Writing objects: 100% (3/3), 506 bytes | 506.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas:   0% (0/2)[Kremote: Resolving deltas:  50% (1/2)[Kremote: Resolving deltas: 100% (2/2)[Kremote: Resolving deltas: 100% (2/2), completed with 2 local objects.[K
+To https://github.com/waltersantiago87/Virtual-Memory-Manager.git
+   50a27d0..067d1b6  main -> main
+[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [7mgit status[27m
+[7mgit log --oneline -6[27m[A]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ git status
+git log --oneline -6
+[?2004lOn branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	[31mevidencias.log[m
+
+nothing added to commit but untracked files present (use "git add" to track)
+[?1h=[33m067d1b6[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Implementando separacao de pagina e offset[m
+[33m50a27d0[m Implementando leitura e validacao dos enderecos[m
+[33mbfb82fe[m Validando argumentos da linha de comando[m
+[33m6fd783c[m Definindo constantes e estruturas da memoria virtual[m
+[33m82084e8[m Adicionando Makefile para compilacao[m
+[33m51a70c0[m Configurando estrutura inicial do projeto[m
+[K[?1l>[?2004h]0;walter@WalterMaia87: ~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[01;32mwalter@WalterMaia87[00m:[01;34m~/projetos/Infra-SW/Virtual-Memory-Manager/wmsn[00m$ [?2004l
+exit
+
+Script done on 2026-11-24 21:31:44-03:00 [COMMAND_EXIT_CODE="0"]
