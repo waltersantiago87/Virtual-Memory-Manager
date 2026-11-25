@@ -94,6 +94,15 @@ int validate_addresses(FILE *file) {
     return 1;
 }
 
+
+int get_page(int address) {
+    return (address >> 8) & 0xFF;
+}
+
+int get_offset(int address) {
+    return address & 0xFF;
+}
+
 int main(int argc, char *argv[]) {
     VirtualMemory vm = {0};
 
@@ -124,6 +133,16 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "Error: invalid address file format.\n");
         fclose(addresses);
         return EXIT_FAILURE;
+    }
+
+    int address;
+
+    while (fscanf(addresses, "%d", &address) == 1) {
+        int page = get_page(address);
+        int offset = get_offset(address);
+
+        printf("Address: %d Page: %d Offset: %d\n",
+               address, page, offset);
     }
 
     fclose(addresses);
