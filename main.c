@@ -208,6 +208,27 @@ int load_page(VirtualMemory *vm, FILE *backing_store, int page) {
     return frame;
 }
 
+
+void initialize_tlb(VirtualMemory *vm) {
+    for (int i = 0; i < TLB_SIZE; i++) {
+        vm->tlb[i].page = -1;
+        vm->tlb[i].frame = -1;
+        vm->tlb[i].valid = 0;
+        vm->tlb[i].loaded_at = 0;
+        vm->tlb[i].last_used = 0;
+    }
+}
+
+int find_free_tlb_entry(const VirtualMemory *vm) {
+    for (int i = 0; i < TLB_SIZE; i++) {
+        if (!vm->tlb[i].valid) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
 int main(int argc, char *argv[]) {
     VirtualMemory vm = {0};
 
@@ -249,6 +270,7 @@ int main(int argc, char *argv[]) {
     }
 
     initialize_memory(&vm);
+    initialize_tlb(&vm);
 
     int address;
 
