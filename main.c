@@ -241,11 +241,25 @@ int search_tlb(const VirtualMemory *vm, int page) {
     return -1;
 }
 
+
+int select_fifo_tlb(const VirtualMemory *vm) {
+    int victim = 0;
+
+    for (int i = 1; i < TLB_SIZE; i++) {
+        if (vm->tlb[i].loaded_at <
+            vm->tlb[victim].loaded_at) {
+            victim = i;
+        }
+    }
+
+    return victim;
+}
+
 int insert_tlb(VirtualMemory *vm, int page, int frame) {
     int index = find_free_tlb_entry(vm);
 
     if (index == -1) {
-        return -1;
+        index = select_fifo_tlb(vm);
     }
 
     vm->tlb[index].page = page;
