@@ -161,11 +161,29 @@ int select_fifo_frame(const VirtualMemory *vm) {
     return victim;
 }
 
+
+int select_lru_frame(const VirtualMemory *vm) {
+    int victim = 0;
+
+    for (int i = 1; i < NUM_FRAMES; i++) {
+        if (vm->frames[i].last_used <
+            vm->frames[victim].last_used) {
+            victim = i;
+        }
+    }
+
+    return victim;
+}
+
 int load_page(VirtualMemory *vm, FILE *backing_store, int page) {
     int frame = find_free_frame(vm);
 
     if (frame == -1) {
-        frame = select_fifo_frame(vm);
+        if (vm->page_algorithm == FIFO) {
+            frame = select_fifo_frame(vm);
+        } else {
+            frame = select_lru_frame(vm);
+        }
     }
 
     if (!read_page(backing_store, page,
