@@ -103,6 +103,34 @@ int get_offset(int address) {
     return address & 0xFF;
 }
 
+
+void initialize_memory(VirtualMemory *vm) {
+    memset(vm->physical_memory, 0, sizeof(vm->physical_memory));
+
+    vm->clock = 0;
+
+    for (int i = 0; i < NUM_PAGES; i++) {
+        vm->page_table[i].frame = -1;
+        vm->page_table[i].valid = 0;
+    }
+
+    for (int i = 0; i < NUM_FRAMES; i++) {
+        vm->frames[i].page = -1;
+        vm->frames[i].loaded_at = 0;
+        vm->frames[i].last_used = 0;
+    }
+}
+
+int find_free_frame(const VirtualMemory *vm) {
+    for (int i = 0; i < NUM_FRAMES; i++) {
+        if (vm->frames[i].page == -1) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
 int main(int argc, char *argv[]) {
     VirtualMemory vm = {0};
 
@@ -134,6 +162,8 @@ int main(int argc, char *argv[]) {
         fclose(addresses);
         return EXIT_FAILURE;
     }
+
+    initialize_memory(&vm);
 
     int address;
 
