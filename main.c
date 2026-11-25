@@ -175,6 +175,20 @@ int select_lru_frame(const VirtualMemory *vm) {
     return victim;
 }
 
+
+void invalidate_tlb_page(VirtualMemory *vm, int page) {
+    for (int i = 0; i < TLB_SIZE; i++) {
+        if (vm->tlb[i].valid &&
+            vm->tlb[i].page == page) {
+            vm->tlb[i].valid = 0;
+            vm->tlb[i].page = -1;
+            vm->tlb[i].frame = -1;
+            vm->tlb[i].loaded_at = 0;
+            vm->tlb[i].last_used = 0;
+        }
+    }
+}
+
 int load_page(VirtualMemory *vm, FILE *backing_store, int page) {
     int frame = find_free_frame(vm);
 
@@ -196,6 +210,7 @@ int load_page(VirtualMemory *vm, FILE *backing_store, int page) {
     if (old_page != -1) {
         vm->page_table[old_page].valid = 0;
         vm->page_table[old_page].frame = -1;
+        invalidate_tlb_page(vm, old_page);
     }
 
     vm->frames[frame].page = page;
