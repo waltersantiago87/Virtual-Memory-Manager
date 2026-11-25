@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <errno.h>
+#include <ctype.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
@@ -59,6 +61,39 @@ int parse_algorithm(const char *name, Algorithm *algorithm) {
     return 0;
 }
 
+
+int validate_addresses(FILE *file) {
+    char token[64];
+    char *end;
+    long address;
+    int count = 0;
+
+    while (fscanf(file, "%63s", token) == 1) {
+        for (size_t i = 0; token[i] != '\0'; i++) {
+            if (!isdigit((unsigned char) token[i])) {
+                return 0;
+            }
+        }
+
+        errno = 0;
+        address = strtol(token, &end, 10);
+
+        if (errno != 0 || *end != '\0' ||
+            address < 0 || address > MAX_ADDRESS) {
+            return 0;
+        }
+
+        count++;
+    }
+
+    if (ferror(file) || count == 0) {
+        return 0;
+    }
+
+    rewind(file);
+    return 1;
+}
+
 int main(int argc, char *argv[]) {
     VirtualMemory vm = {0};
 
@@ -78,5 +113,19 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
+    FILE *addresses = fopen(argv[1], "r");
+
+    if (addresses == NULL) {
+        fprintf(stderr, "Error: cannot open address file.\n");
+        return EXIT_FAILURE;
+    }
+
+    if (!validate_addresses(addresses)) {
+        fprintf(stderr, "Error: invalid address file format.\n");
+        fclose(addresses);
+        return EXIT_FAILURE;
+    }
+
+    fclose(addresses);
     return EXIT_SUCCESS;
 }
