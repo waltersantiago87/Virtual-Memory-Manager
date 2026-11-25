@@ -245,15 +245,55 @@ int find_free_tlb_entry(const VirtualMemory *vm) {
 }
 
 
+
+typedef struct {
+    const TLBEntry *entry;
+    int page;
+    int found;
+} ThreadSearch;
+
+void *check_tlb_entry(void *arg) {
+    ThreadSearch *data = arg;
+
+    data->found = data->entry->valid &&
+                  data->entry->page == data->page;
+
+    return NULL;
+}
+
 int search_tlb(const VirtualMemory *vm, int page) {
+    pthread_t threads[TLB_SIZE];
+    ThreadSearch tasks[TLB_SIZE];
+    int created = 0;
+
     for (int i = 0; i < TLB_SIZE; i++) {
-        if (vm->tlb[i].valid &&
-            vm->tlb[i].page == page) {
-            return i;
+        tasks[i].entry = &vm->tlb[i];
+        tasks[i].page = page;
+        tasks[i].found = 0;
+
+        if (pthread_create(&threads[i], NULL,
+                           check_tlb_entry, &tasks[i]) != 0) {
+            for (int j = 0; j < created; j++) {
+                pthread_join(threads[j], NULL);
+            }
+
+            return -2;
+        }
+
+        created++;
+    }
+
+    int result = -1;
+
+    for (int i = 0; i < TLB_SIZE; i++) {
+        pthread_join(threads[i], NULL);
+
+        if (tasks[i].found) {
+            result = i;
         }
     }
 
-    return -1;
+    return result;
 }
 
 
@@ -357,6 +397,13 @@ int main(int argc, char *argv[]) {
 
         int frame;
         int tlb_index = search_tlb(&vm, page);
+
+        if (tlb_index == -2) {
+            fprintf(stderr, "Error: cannot create TLB thread.\n");
+            fclose(backing_store);
+            fclose(addresses);
+            return EXIT_FAILURE;
+        }
 
         if (tlb_index != -1) {
             frame = vm.tlb[tlb_index].frame;
