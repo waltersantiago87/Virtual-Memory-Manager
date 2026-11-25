@@ -229,6 +229,34 @@ int find_free_tlb_entry(const VirtualMemory *vm) {
     return -1;
 }
 
+
+int search_tlb(const VirtualMemory *vm, int page) {
+    for (int i = 0; i < TLB_SIZE; i++) {
+        if (vm->tlb[i].valid &&
+            vm->tlb[i].page == page) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+int insert_tlb(VirtualMemory *vm, int page, int frame) {
+    int index = find_free_tlb_entry(vm);
+
+    if (index == -1) {
+        return -1;
+    }
+
+    vm->tlb[index].page = page;
+    vm->tlb[index].frame = frame;
+    vm->tlb[index].valid = 1;
+    vm->tlb[index].loaded_at = vm->clock;
+    vm->tlb[index].last_used = vm->clock;
+
+    return index;
+}
+
 int main(int argc, char *argv[]) {
     VirtualMemory vm = {0};
 
@@ -281,14 +309,28 @@ int main(int argc, char *argv[]) {
         vm.clock++;
 
         int frame;
+        int tlb_index = search_tlb(&vm, page);
 
-        if (vm.page_table[page].valid) {
-            frame = vm.page_table[page].frame;
+        if (tlb_index != -1) {
+            frame = vm.tlb[tlb_index].frame;
         } else {
-            frame = load_page(&vm, backing_store, page);
+            if (vm.page_table[page].valid) {
+                frame = vm.page_table[page].frame;
+            } else {
+                frame = load_page(&vm, backing_store, page);
 
-            if (frame == -1) {
-                fprintf(stderr, "Error: cannot load page.\n");
+                if (frame == -1) {
+                    fprintf(stderr, "Error: cannot load page.\n");
+                    fclose(backing_store);
+                    fclose(addresses);
+                    return EXIT_FAILURE;
+                }
+            }
+
+            tlb_index = insert_tlb(&vm, page, frame);
+
+            if (tlb_index == -1) {
+                fprintf(stderr, "Error: TLB is full.\n");
                 fclose(backing_store);
                 fclose(addresses);
                 return EXIT_FAILURE;
@@ -296,12 +338,13 @@ int main(int argc, char *argv[]) {
         }
 
         vm.frames[frame].last_used = vm.clock;
+        vm.tlb[tlb_index].last_used = vm.clock;
 
         int physical_address = frame * PAGE_SIZE + offset;
         int value = vm.physical_memory[frame][offset];
 
-        printf("Virtual address: %d Physical address: %d Value: %d\n",
-               address, physical_address, value);
+        printf("Virtual address: %d TLB: %d Physical address: %d Value: %d\n",
+               address, tlb_index, physical_address, value);
     }
 
     fclose(backing_store);
