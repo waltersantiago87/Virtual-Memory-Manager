@@ -146,6 +146,29 @@ int read_page(FILE *backing_store, int page, int8_t *buffer) {
     return 1;
 }
 
+
+int load_page(VirtualMemory *vm, FILE *backing_store, int page) {
+    int frame = find_free_frame(vm);
+
+    if (frame == -1) {
+        return -1;
+    }
+
+    if (!read_page(backing_store, page,
+                   vm->physical_memory[frame])) {
+        return -1;
+    }
+
+    vm->frames[frame].page = page;
+    vm->frames[frame].loaded_at = vm->clock;
+    vm->frames[frame].last_used = vm->clock;
+
+    vm->page_table[page].frame = frame;
+    vm->page_table[page].valid = 1;
+
+    return frame;
+}
+
 int main(int argc, char *argv[]) {
     VirtualMemory vm = {0};
 
@@ -194,17 +217,30 @@ int main(int argc, char *argv[]) {
         int page = get_page(address);
         int offset = get_offset(address);
 
-        int8_t buffer[PAGE_SIZE];
+        vm.clock++;
 
-        if (!read_page(backing_store, page, buffer)) {
-            fprintf(stderr, "Error: cannot read page from backing store.\n");
-            fclose(backing_store);
-            fclose(addresses);
-            return EXIT_FAILURE;
+        int frame;
+
+        if (vm.page_table[page].valid) {
+            frame = vm.page_table[page].frame;
+        } else {
+            frame = load_page(&vm, backing_store, page);
+
+            if (frame == -1) {
+                fprintf(stderr, "Error: cannot load page.\n");
+                fclose(backing_store);
+                fclose(addresses);
+                return EXIT_FAILURE;
+            }
         }
 
-        printf("Address: %d Page: %d Offset: %d Value: %d\n",
-               address, page, offset, buffer[offset]);
+        vm.frames[frame].last_used = vm.clock;
+
+        int physical_address = frame * PAGE_SIZE + offset;
+        int value = vm.physical_memory[frame][offset];
+
+        printf("Virtual address: %d Physical address: %d Value: %d\n",
+               address, physical_address, value);
     }
 
     fclose(backing_store);
